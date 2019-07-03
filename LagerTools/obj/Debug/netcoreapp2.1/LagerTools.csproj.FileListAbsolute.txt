@@ -1,0 +1,11 @@
+C:\Users\ArvidAcademy\Documents\Visual Studio Projects\LagerTools\LagerTools\bin\Debug\netcoreapp2.1\LagerTools.deps.json
+C:\Users\ArvidAcademy\Documents\Visual Studio Projects\LagerTools\LagerTools\bin\Debug\netcoreapp2.1\LagerTools.runtimeconfig.json
+C:\Users\ArvidAcademy\Documents\Visual Studio Projects\LagerTools\LagerTools\bin\Debug\netcoreapp2.1\LagerTools.runtimeconfig.dev.json
+C:\Users\ArvidAcademy\Documents\Visual Studio Projects\LagerTools\LagerTools\bin\Debug\netcoreapp2.1\LagerTools.dll
+C:\Users\ArvidAcademy\Documents\Visual Studio Projects\LagerTools\LagerTools\bin\Debug\netcoreapp2.1\LagerTools.pdb
+C:\Users\ArvidAcademy\Documents\Visual Studio Projects\LagerTools\LagerTools\obj\Debug\netcoreapp2.1\LagerTools.csprojAssemblyReference.cache
+C:\Users\ArvidAcademy\Documents\Visual Studio Projects\LagerTools\LagerTools\obj\Debug\netcoreapp2.1\LagerTools.csproj.CoreCompileInputs.cache
+C:\Users\ArvidAcademy\Documents\Visual Studio Projects\LagerTools\LagerTools\obj\Debug\netcoreapp2.1\LagerTools.AssemblyInfoInputs.cache
+C:\Users\ArvidAcademy\Documents\Visual Studio Projects\LagerTools\LagerTools\obj\Debug\netcoreapp2.1\LagerTools.AssemblyInfo.cs
+C:\Users\ArvidAcademy\Documents\Visual Studio Projects\LagerTools\LagerTools\obj\Debug\netcoreapp2.1\LagerTools.dll
+C:\Users\ArvidAcademy\Documents\Visual Studio Projects\LagerTools\LagerTools\obj\Debug\netcoreapp2.1\LagerTools.pdb
