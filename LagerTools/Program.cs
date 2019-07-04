@@ -5,23 +5,24 @@ using System.Linq;
 
 //TODO Basic
 //Felhantering - ok
-//basic output
-//Snygg output
-// kolla längd på prod.nummer
-//inge dubbleter artno
+//basic output - ok
+//Snygg output - ok
+
+//inga dubbletter
+//-eller
+//tillåt dubbletter men ha en funktion som visar 'fel' för användaren - ok
 
 //TODO Överkurs
-//Filhatering
-//Sök funktion
-//inga dubbleter lagerplats
+//Filhatering Läs - ok 
+//Filhantering Skriv 
+//Sök funktion - ok 
 
 namespace LagerTools
 {
     public class Program
     {
-        //static List<Product> readProducts;
-        static List<Product> productList;
-        static void Main()
+        static public List<Product> productList;
+        public static void Main()
         {
             if (productList == null)
                 productList = Parser.ReadInventory("Inventory.csv");
@@ -33,7 +34,7 @@ namespace LagerTools
         }
         static void ChooseModule()
         {
-            WriteColor("Choose Module: (A)dd products, (L)ist products, (S)earch products: ", ConsoleColor.White);
+            WriteColor("Choose Module: (A)dd products, (L)ist products, (S)earch products, (W)arnings: ", ConsoleColor.White);
             string input = GreenInput().ToUpper();
             switch(input)
             {
@@ -41,10 +42,22 @@ namespace LagerTools
                     AddProducts();
                     break;
                 case "L":
-                    ListProducts();
+                    #region case
+                    Console.Clear();
+                    WriteLineColor("Total products in inventory: " + productList.Count(), ConsoleColor.White);
+                    ListProducts(productList);
+                    WriteColor("Press RETUR to go back: ", ConsoleColor.White);
+                    Console.ReadLine();
+                    Main();
+                    #endregion
                     break;
                 case "S":
-                    SearchProducts();
+                    Console.Clear();
+                    DbSearch.SearchDb();
+                    break;
+                case "W":
+                    Console.Clear();
+                    DbWarnings.DisplayWarnings(productList);
                     break;
                 default:
                     WriteLineColor("Error Module not recognized: " + input, ConsoleColor.Red);
@@ -53,35 +66,25 @@ namespace LagerTools
             }
         }
 
-        private static void SearchProducts()
+        public static void ListProducts(List<Product> products)
         {
-            throw new NotImplementedException();
-        }
-
-        private static void ListProducts()
-        {
-            Console.Clear();
-            WriteLineColor("Products in inventory: " + productList.Count(), ConsoleColor.White);
             Console.WriteLine();
             WriteColor("ProductNumber" + "\t", ConsoleColor.White);
-            WriteColor("ProductName" + "\t", ConsoleColor.White);
-            WriteColor("ProductCategory" + "\t".PadRight(9), ConsoleColor.White);
+            WriteColor("ProductName".PadRight(25) + "\t", ConsoleColor.White);
+            WriteColor("ProductCategory" + "\t", ConsoleColor.White);
             WriteColor("ProductStorage" + "\t", ConsoleColor.White);
             Console.WriteLine();
-            foreach (Product product in productList)
+            foreach (Product product in products)
             {
-                WriteColor(product.ProductNumber.PadRight(15) + "\t", ConsoleColor.Blue);
-                WriteColor(product.ProductName.PadRight(15) + "\t", ConsoleColor.Green);
-                WriteColor(product.ProductCategory.ToString().PadRight(20) + "\t", ConsoleColor.Yellow);
-                WriteColor(product.ProductStorage + "\t", ConsoleColor.Cyan);
+                WriteColor(product.ProductNumber.PadRight(15) + "\t", Product.NumberColor);
+                WriteColor(product.ProductName.PadRight(25) + "\t", Product.NameColor);
+                WriteColor(product.ProductCategory.ToString().PadRight(15) + "\t", Product.CategoryColor);
+                WriteColor(product.ProductStorage + "\t", Product.StorageColor);
                 Console.WriteLine();
             }
             Console.WriteLine();
-            WriteColor("Press RETUR to go back: ", ConsoleColor.White);
-            Console.ReadLine();
-            Main();
-        }
 
+        }
         static void AddProducts()
         {
             Console.Clear();
@@ -94,7 +97,7 @@ namespace LagerTools
         static bool AskForProducts()
         {
             WriteLineColor("Mata in 'exit' för att gå tillbaka.", ConsoleColor.White);
-            WriteLineColor("Mata in: produktnummer, produktkategori, produktnamn, plats: ", ConsoleColor.White);
+            WriteLineColor("Mata in: produktnamn, produktnummer, produktkategori, lagerplats: ", ConsoleColor.White);
 
             string[] input = GreenInput().Split(",");
 
@@ -106,44 +109,50 @@ namespace LagerTools
             }
             try
             {
-                foreach (char c in input[0])
+                bool parsed = true;
+                if (input[0] == string.Empty)
+                    throw new Exception();
+
+                if(input.Length >= 2)
                 {
-                    int parsed = int.Parse(c.ToString());
+                    foreach (char c in input[1])
+                        if (int.TryParse(c.ToString(), out int x) == false)
+                            parsed = false;
                 }
+
 
                 productList.Add(
                     new Product
                     (
                     input[0],
-                    Enum.TryParse(input[1], out Category category) ? category : Category.NULL,
-                    input[2],
-                    Enum.TryParse(input[3], out Storage storage) ? storage : Storage.NULL
+                    input.Length >= 2 && parsed == true ? input[1] : "------",
+                    input.Length >= 3 && Enum.TryParse(input[2], true, out Category category) ? category : Category.NULL,
+                    input.Length >= 4 && Enum.TryParse(input[3], true, out Storage storage) ? storage : Storage.NULL
                     ));
             }
             catch
             {
-                //Console.WriteLine(e.Message);
                 Console.Clear();
-                WriteLineColor("Error Invalid input! ", ConsoleColor.Red);
+                WriteLineColor("Error Invalid input - Product must have a name", ConsoleColor.Red);
                 return true;
             }
             Console.Clear();
             WriteLineColor("Product added succesfully! ", ConsoleColor.Yellow);
             return true;
         }
-        static void WriteColor(string msg, ConsoleColor color)
+        public static void WriteColor(string msg, ConsoleColor color)
         {
             Console.ForegroundColor = color;
             Console.Write(msg);
             Console.ResetColor();
         }
-        static void WriteLineColor(string msg, ConsoleColor color)
+        public static void WriteLineColor(string msg, ConsoleColor color)
         {
             Console.ForegroundColor = color;
             Console.WriteLine(msg);
             Console.ResetColor();
         }
-        static string GreenInput()
+        public static string GreenInput()
         {
             Console.ForegroundColor = ConsoleColor.Green;
             string input = Console.ReadLine();

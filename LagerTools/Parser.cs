@@ -9,9 +9,11 @@ namespace LagerTools
     {
         static public List<Product> ReadInventory(string dataFile)
         {
+            //Read file on disk
+
             List<string> peopleRows = ReadFileToList(dataFile);
 
-            // Remove first line
+            // Remove first row
 
             RemoveFirstLine(peopleRows);
 
@@ -42,9 +44,9 @@ namespace LagerTools
             #region constructor
                 (
                     rowArray[1],
-                    Enum.TryParse(rowArray[2], out Category category) ? category : Category.NULL,
-                    rowArray[3],
-                    Enum.TryParse(rowArray[4], out Storage storage) ? storage : Storage.NULL
+                    rowArray.Length >= 3 ? rowArray[2] : "------",
+                    rowArray.Length >= 4 && Enum.TryParse(rowArray[3], true, out Category category) ? category : Category.NULL,
+                    rowArray.Length >= 5 && Enum.TryParse(rowArray[4], true, out Storage storage) ? storage : Storage.NULL
                 );
 
             {
@@ -60,7 +62,6 @@ namespace LagerTools
         }
         static private List<string> ReadFileToList(string dataFileWithCustomers)
         {
-            //return File.ReadAllLines($"Linq\\Data\\{dataFileWithCustomers}").ToList();
             return File.ReadAllLines($"{dataFileWithCustomers}").ToList();
         }
     }

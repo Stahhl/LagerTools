@@ -1,2 +1,20 @@
-Id,ProductNumber,ProductCategory,ProductName,ProductStorage
-1,000000,Meat,apa,A1
+Id,ProductName,ProductNumber,ProductCategory,ProductStorage
+1,apa,000000,Meat,A1
+2,Apelsin,------,Fruit,Z9
+3,Polarbröd,000002,Bread,H2
+4,Sex laxar i en lax ask,000003,Fish,A4
+5,paprika,000004,Vegetable,A1
+6,Oxfile,000005,Meat,X3
+7,gädda,000006,fish,A6
+8,Baguette,000007,bREAD,J2
+9,Bäversvans,000008,Meat,B9
+10,Slamsugare,000009,Fish,F5
+11,broccoli,000010,VEGETABLE,99
+12,Pepparkaka,000011,Bread,u7
+13,banan,000012,Fruit,A1
+14,banan,000012,Fruit,A1
+15,apa,000014,Meat,A1
+16,apa,000014,Meat,A1
+17,apa,000014,Meat,A1
+18,apa,000014,Meat,A1
+

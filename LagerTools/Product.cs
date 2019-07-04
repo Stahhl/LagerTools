@@ -5,17 +5,19 @@ using System.Text;
 public enum Category
 {
     NULL,
+    Other,
+
     Meat,
     Fish,
     Fruit,
     Vegetable,
     Bread,
-    Other,
     //TODO ADD MORE
 }
 public enum Storage
 {
     NULL,
+    Other,
 
     A1,A2,A3,A4,A5,A6,A7,A8,A9, //A
 
@@ -73,12 +75,12 @@ public enum Storage
 namespace LagerTools
 {
     public class Product
-    {
+    {   
         //produktnummer, produktkategori, produktnamn, plats
-        public Product(string ProductNumber, Category ProductCategory, string ProductName, Storage ProductStorage)
+        public Product(string ProductName, string ProductNumber, Category ProductCategory, Storage ProductStorage)
         {
-            this.ProductNumber = ProductNumber;
             this.ProductCategory = ProductCategory;
+            this.ProductNumber = ProductNumber;
             this.ProductName = ProductName;
             this.ProductStorage = ProductStorage;
         }
@@ -87,5 +89,10 @@ namespace LagerTools
         public Category ProductCategory { get; private set; }
         public string ProductName { get; private set; }
         public Storage ProductStorage { get; private set; }
+
+        public static ConsoleColor NameColor { get; private set; } = ConsoleColor.Green;
+        public static ConsoleColor NumberColor { get; private set; } = ConsoleColor.Blue;
+        public static ConsoleColor CategoryColor { get; private set; } = ConsoleColor.Yellow;
+        public static ConsoleColor StorageColor { get; private set; } = ConsoleColor.Cyan;
     }
 }
