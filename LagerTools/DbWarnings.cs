@@ -7,6 +7,8 @@ namespace LagerTools
 {
     public static class DbWarnings
     {
+        //Instead of a bunch of error handling when creating products 
+        //Use this class to present potential errors to the user
         public static void DisplayWarnings(List<Product> products)
         {
             Program.WriteLineColor("Possible errors in db: ", ConsoleColor.White);

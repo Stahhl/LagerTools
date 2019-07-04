@@ -85,9 +85,9 @@ namespace LagerTools
             this.ProductStorage = ProductStorage;
         }
 
+        public string ProductName { get; private set; }
         public string ProductNumber { get; private set; }
         public Category ProductCategory { get; private set; }
-        public string ProductName { get; private set; }
         public Storage ProductStorage { get; private set; }
 
         public static ConsoleColor NameColor { get; private set; } = ConsoleColor.Green;

@@ -22,11 +22,13 @@ namespace LagerTools
     public class Program
     {
         static public List<Product> productList;
+        static string fileName = "Data\\Inventory.csv";
         public static void Main()
         {
             if (productList == null)
-                productList = Parser.ReadInventory("Inventory.csv");
+                productList = Parser.ReadInventory(fileName);
 
+            //Parser.SaveToCsv(productList, fileName);
             Console.Clear();
             WriteLineColor("Welcome to LagerTools TM! ", ConsoleColor.White);
             WriteLineColor("Products in inventory: " + productList.Count(), ConsoleColor.White);
@@ -96,7 +98,7 @@ namespace LagerTools
         }
         static bool AskForProducts()
         {
-            WriteLineColor("Mata in 'exit' för att gå tillbaka.", ConsoleColor.White);
+            WriteLineColor("Enter 'exit' to exit without saveing, 'save' to save the new list", ConsoleColor.White);
             WriteLineColor("Mata in: produktnamn, produktnummer, produktkategori, lagerplats: ", ConsoleColor.White);
 
             string[] input = GreenInput().Split(",");
@@ -106,6 +108,11 @@ namespace LagerTools
                 input[i] = input[i].Trim();
                 if (input[i].ToUpper() == "EXIT")
                     return false;
+                if (input[i].ToUpper() == "SAVE")
+                {
+                    Parser.SaveToCsv(productList, fileName);
+                    return false;
+                }
             }
             try
             {
