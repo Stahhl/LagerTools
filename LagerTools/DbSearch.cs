@@ -86,6 +86,33 @@ namespace LagerTools
                 SearchDb();
             }
         }
+        internal static void ShowEmptyShelves()
+        {
+            //(9 * 26) + 2 = 236 total enum values
+            var allEnums = Enum.GetValues(typeof(Storage)).Cast<Storage>().ToList();
+            var usedEnums = Program.productList.Select(p => p.ProductStorage).Distinct().ToList();
+            var unUsedEnums = allEnums.Where(x => usedEnums.Contains(x) == false).ToList();
+
+            Program.WriteLineColor("Empty Shelves: " + unUsedEnums.Count(), ConsoleColor.White);
+            Console.WriteLine();
+            //Console.WriteLine(unUsedEnums[0] + " " + unUsedEnums[unUsedEnums.Count() - 1]);
+            int index = 0;
+            for (int a = 0; a < 22; a++)
+            {
+                for (int b = 0; b < 12; b++)
+                {
+                    if (index >= unUsedEnums.Count())
+                        break;
+
+                    Program.WriteColor(unUsedEnums[index] + " ", Product.StorageColor);
+                    index++;
+                }
+                Console.WriteLine();
+            }
+            Program.WriteColor("Press RETUR to go back: ", ConsoleColor.White);
+            Console.ReadLine();
+            Program.Main();
+        }
         static void InvalidInput()
         {
             Console.Clear();

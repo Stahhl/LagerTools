@@ -14,7 +14,7 @@ using System.Linq;
 
 //TODO Överkurs
 //Filhatering Läs - ok 
-//Filhantering Skriv 
+//Filhantering Skriv - ok
 //Sök funktion - ok 
 
 namespace LagerTools
@@ -28,7 +28,8 @@ namespace LagerTools
             if (productList == null)
                 productList = Parser.ReadInventory(fileName);
 
-            //Parser.SaveToCsv(productList, fileName);
+            //DbSearch.ShowEmptyShelves();
+            Parser.SaveToCsv(productList, fileName);
             Console.Clear();
             WriteLineColor("Welcome to LagerTools TM! ", ConsoleColor.White);
             WriteLineColor("Products in inventory: " + productList.Count(), ConsoleColor.White);
@@ -36,7 +37,7 @@ namespace LagerTools
         }
         static void ChooseModule()
         {
-            WriteColor("Choose Module: (A)dd products, (L)ist products, (S)earch products, (W)arnings: ", ConsoleColor.White);
+            WriteColor("Choose Module: (A)dd products, (L)ist products, (S)earch products, (W)arnings, (E)mpty shelves: ", ConsoleColor.White);
             string input = GreenInput().ToUpper();
             switch(input)
             {
@@ -60,6 +61,10 @@ namespace LagerTools
                 case "W":
                     Console.Clear();
                     DbWarnings.DisplayWarnings(productList);
+                    break;
+                case "E":
+                    Console.Clear();
+                    DbSearch.ShowEmptyShelves();
                     break;
                 default:
                     WriteLineColor("Error Module not recognized: " + input, ConsoleColor.Red);
@@ -122,6 +127,8 @@ namespace LagerTools
 
                 if(input.Length >= 2)
                 {
+                    if (input[1] == string.Empty)
+                        parsed = false;
                     foreach (char c in input[1])
                         if (int.TryParse(c.ToString(), out int x) == false)
                             parsed = false;
