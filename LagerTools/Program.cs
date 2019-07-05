@@ -147,14 +147,15 @@ namespace LagerTools
         }
         static void AddProducts()
         {
+            List<Product> tempList = new List<Product>();
             Console.Clear();
-            while (AskForProducts())
+            while (AskForProducts(tempList))
             {
 
             }
             Main();
         }
-        static bool AskForProducts()
+        static bool AskForProducts(List<Product> tempList)
         {
             WriteLineColor("Enter 'exit' to exit without saveing, 'save' to save the new list", ConsoleColor.White);
             WriteLineColor("Mata in: produktnamn, produktnummer, produktkategori, lagerplats: ", ConsoleColor.White);
@@ -165,11 +166,20 @@ namespace LagerTools
             {
                 input[i] = input[i].Trim();
                 if (input[i].ToUpper() == "EXIT")
-                    return false;
+                    Main();
+
                 if (input[i].ToUpper() == "SAVE")
                 {
-                    Parser.SaveToCsv(productList, fileName);
-                    return false;
+                    WriteColor("Are you sure you want to overwrite? y/n: ", ConsoleColor.Red);
+                    if(GreenInput().ToUpper() == "Y")
+                    {
+                        foreach (var p in tempList)
+                        {
+                            productList.Add(p);
+                        }
+                        Parser.SaveToCsv(productList, fileName);
+                        Main();
+                    }
                 }
             }
             try
@@ -188,7 +198,7 @@ namespace LagerTools
                 }
 
 
-                productList.Add(
+                tempList.Add(
                     new Product
                     (
                     input[0],

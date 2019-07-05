@@ -61,7 +61,6 @@ namespace LagerTools
             if (File.Exists(filePath) == false)
                 throw new Exception("FILEEEEEEEEEE");
 
-
             //Create a backup of previous db file
             //loop through the folder until a unique filename is found
             //copy the old db file with the new name
@@ -81,7 +80,7 @@ namespace LagerTools
             {
                 output.Add(new WriteOutput()
                 {
-                    Id = i,
+                    Id = i + 1,
                     ProductName = products[i].ProductName,
                     ProductNumber = products[i].ProductNumber,
                     ProductCategory = products[i].ProductCategory.ToString(),
