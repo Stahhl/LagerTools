@@ -94,7 +94,12 @@ namespace LagerTools
                 WriteColor("Are you sure you want to overwrite? y/n: ", ConsoleColor.Red);
                 if (GreenInput().ToUpper() == "Y")
                 {
-                    Parser.SaveToCsv(tempList, fileName);
+                    Program.productList.Clear();
+                    foreach (var p in tempList)
+                    {
+                        Program.productList.Add(p);
+                    }
+                    Parser.SaveToCsv(Program.productList, fileName);
                     Main();
                 }
             }

@@ -64,6 +64,7 @@ namespace LagerTools
 
             Program.WriteColor("Press RETUR to go back: ", ConsoleColor.White);
             Console.ReadLine();
+            Console.Clear();
             SearchDb();
         }
         static void SearchDb(SearchBy searchBy, string term, bool keepGoing)
@@ -95,6 +96,7 @@ namespace LagerTools
             {
                 Program.WriteColor("Press RETUR to go back: ", ConsoleColor.White);
                 Console.ReadLine();
+                Console.Clear();
                 SearchDb();
             }
         }
@@ -129,7 +131,8 @@ namespace LagerTools
             }
             Program.WriteColor("\nPress RETUR to go back: ", ConsoleColor.White);
             Console.ReadLine();
-            Program.Main();
+            Console.Clear();
+            SearchDb();
         }
         public static void InvalidInput()
         {

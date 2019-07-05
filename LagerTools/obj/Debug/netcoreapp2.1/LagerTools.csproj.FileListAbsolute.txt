@@ -9,11 +9,3 @@ C:\Users\ArvidAcademy\Documents\Visual Studio Projects\LagerTools\LagerTools\obj
 C:\Users\ArvidAcademy\Documents\Visual Studio Projects\LagerTools\LagerTools\obj\Debug\netcoreapp2.1\LagerTools.AssemblyInfo.cs
 C:\Users\ArvidAcademy\Documents\Visual Studio Projects\LagerTools\LagerTools\obj\Debug\netcoreapp2.1\LagerTools.dll
 C:\Users\ArvidAcademy\Documents\Visual Studio Projects\LagerTools\LagerTools\obj\Debug\netcoreapp2.1\LagerTools.pdb
-C:\Users\ArvidAcademy\Documents\Visual Studio Projects\LagerTools\LagerTools\bin\Debug\netcoreapp2.1\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
-C:\Users\ArvidAcademy\Documents\Visual Studio Projects\LagerTools\LagerTools\bin\Debug\netcoreapp2.1\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
-C:\Users\ArvidAcademy\Documents\Visual Studio Projects\LagerTools\LagerTools\bin\Debug\netcoreapp2.1\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
-C:\Users\ArvidAcademy\Documents\Visual Studio Projects\LagerTools\LagerTools\bin\Debug\netcoreapp2.1\Tester.dll
-C:\Users\ArvidAcademy\Documents\Visual Studio Projects\LagerTools\LagerTools\bin\Debug\netcoreapp2.1\Microsoft.VisualStudio.TestPlatform.TestFramework.dll
-C:\Users\ArvidAcademy\Documents\Visual Studio Projects\LagerTools\LagerTools\bin\Debug\netcoreapp2.1\Tester.pdb
-C:\Users\ArvidAcademy\Documents\Visual Studio Projects\LagerTools\LagerTools\bin\Debug\netcoreapp2.1\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
-C:\Users\ArvidAcademy\Documents\Visual Studio Projects\LagerTools\LagerTools\obj\Debug\netcoreapp2.1\LagerTools.csproj.CopyComplete

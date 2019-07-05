@@ -61,11 +61,7 @@ namespace LagerTools
             if (File.Exists(filePath) == false)
                 throw new Exception("FILEEEEEEEEEE");
 
-            Program.productList.Clear();
-            foreach (var p in products)
-            {
-                Program.productList.Add(p);
-            }
+
             //Create a backup of previous db file
             //loop through the folder until a unique filename is found
             //copy the old db file with the new name
