@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using Tester;
+
 
 //TODO Basic
 //Felhantering - ok
@@ -28,8 +29,6 @@ namespace LagerTools
             if (productList == null)
                 productList = Parser.ReadInventory(fileName);
 
-            //DbSearch.ShowEmptyShelves();
-            Parser.SaveToCsv(productList, fileName);
             Console.Clear();
             WriteLineColor("Welcome to LagerTools TM! ", ConsoleColor.White);
             WriteLineColor("Products in inventory: " + productList.Count(), ConsoleColor.White);
@@ -37,7 +36,7 @@ namespace LagerTools
         }
         static void ChooseModule()
         {
-            WriteColor("Choose Module: (A)dd products, (L)ist products, (S)earch products, (W)arnings, (E)mpty shelves: ", ConsoleColor.White);
+            WriteColor("Choose Module: (A)dd products, (L)ist products, (S)earch products, (R)emove products, (W)arnings, (E)mpty shelves: ", ConsoleColor.White);
             string input = GreenInput().ToUpper();
             switch(input)
             {
@@ -58,6 +57,9 @@ namespace LagerTools
                     Console.Clear();
                     DbSearch.SearchDb();
                     break;
+                case "R":
+                    RemoveProduct(productList);
+                    break;
                 case "W":
                     Console.Clear();
                     DbWarnings.DisplayWarnings(productList);
@@ -72,17 +74,64 @@ namespace LagerTools
                     break;
             }
         }
+        static void RemoveProduct(List<Product> products)
+        {
+            List<Product> tempList = new List<Product>();
+            foreach (var item in products)
+            {
+                tempList.Add(item);
+            }
+            Console.Clear();
+            WriteColor("Type 'exit' to go back without saving, 'save' to save and go back: ", ConsoleColor.White);
+            WriteLineColor("Choose what products to remove by Id: ", ConsoleColor.White);
+            ListProducts(tempList);
+            WriteColor("Input: ", ConsoleColor.White);
 
+            string input = GreenInput();
+            if (input.ToUpper() == "EXIT")
+                Main();
+            if (input.ToUpper() == "SAVE")
+            {
+                WriteColor("Are you sure you want to overwrite? y/n: ", ConsoleColor.Red);
+                if (GreenInput().ToUpper() == "Y")
+                {
+                    Parser.SaveToCsv(tempList, fileName);
+                    Main();
+                }
+            }
+
+            if (int.TryParse(input, out int result) == true && result <= tempList.Count())
+            {
+                Console.Clear();
+                WriteLineColor("Are you sure you want to remove? y/n: ", ConsoleColor.Red);
+                ListProducts(new List<Product>() { tempList[result - 1] });
+                if (GreenInput().ToUpper() == "Y")
+                {
+                    tempList.RemoveAt(result - 1);
+                    RemoveProduct(tempList);
+                }
+            }
+            else
+            {
+                Console.Clear();
+                Program.WriteLineColor("Invalid input ", ConsoleColor.Red);
+                RemoveProduct(products);
+            }
+        }
         public static void ListProducts(List<Product> products)
         {
             Console.WriteLine();
+            WriteColor("Id" + "\t", ConsoleColor.White);
             WriteColor("ProductNumber" + "\t", ConsoleColor.White);
             WriteColor("ProductName".PadRight(25) + "\t", ConsoleColor.White);
             WriteColor("ProductCategory" + "\t", ConsoleColor.White);
             WriteColor("ProductStorage" + "\t", ConsoleColor.White);
             Console.WriteLine();
+            int index = 1;
             foreach (Product product in products)
             {
+                WriteColor(index + "\t", ConsoleColor.White);
+                index++;
                 WriteColor(product.ProductNumber.PadRight(15) + "\t", Product.NumberColor);
                 WriteColor(product.ProductName.PadRight(25) + "\t", Product.NameColor);
                 WriteColor(product.ProductCategory.ToString().PadRight(15) + "\t", Product.CategoryColor);

@@ -61,6 +61,14 @@ namespace LagerTools
             if (File.Exists(filePath) == false)
                 throw new Exception("FILEEEEEEEEEE");
 
+            Program.productList.Clear();
+            foreach (var p in products)
+            {
+                Program.productList.Add(p);
+            }
+            //Create a backup of previous db file
+            //loop through the folder until a unique filename is found
+            //copy the old db file with the new name
             string newPath = filePath;
             int count = 0;
             while (File.Exists(newPath))
@@ -70,8 +78,9 @@ namespace LagerTools
             }
             Console.WriteLine("newPath = " + newPath);
             File.Copy(filePath, newPath);
-            List<WriteOutput> output = new List<WriteOutput>();
 
+            //Create a class just for writing to file
+            List<WriteOutput> output = new List<WriteOutput>();
             for (int i = 0; i < products.Count(); i++)
             {
                 output.Add(new WriteOutput()
@@ -84,6 +93,9 @@ namespace LagerTools
                 }); ;
             }
 
+            //Use extension 'csv helper' to write to file
+            //it automatically writes the first row as the name of the class-properties
+            //and fills in the values in the columns
             using (var writer = new StreamWriter(filePath))
             using (var csv = new CsvWriter(writer))
             {

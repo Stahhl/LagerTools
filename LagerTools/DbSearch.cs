@@ -1,20 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 
 namespace LagerTools
 {
+    //Handle searching db by various terms
     public static class DbSearch
     {
+        //categories to search by
+        private enum SearchBy
+        {
+            NULL,
+            Name,
+            Number,
+            Category,
+            Storage,
+        }
         public static void SearchDb()
         {
-            Console.Clear();
             Program.WriteLineColor("Mata in 'exit' för att gå tillbaka.", ConsoleColor.White);
             Program.WriteLineColor("Sök produkter efter: ", ConsoleColor.White);
             Program.WriteLineColor("All - A:term, Name - P:term, Number - N:term,  Catergory - C:term, Storage - S:term: ", ConsoleColor.White);
 
             string[] input = Program.GreenInput().Split(":");
+
+            if(input[0].ToUpper() == "EXIT")
+                Program.Main();
 
             if (input.Length != 2)
                 InvalidInput();
@@ -25,16 +36,16 @@ namespace LagerTools
                     SearchDbAll(input[1]);
                     break;
                 case "P":
-                    SearchBy("name", input[1], false);
+                    SearchDb(SearchBy.Name, input[1], false);
                     break;
                 case "N":
-                    SearchBy("number", input[1], false);
+                    SearchDb(SearchBy.Number, input[1], false);
                     break;
                 case "C":
-                    SearchBy("category", input[1], false);
+                    SearchDb(SearchBy.Category, input[1], false);
                     break;
                 case "S":
-                    SearchBy("storage", input[1], false);
+                    SearchDb(SearchBy.Storage, input[1], false);
                     break;
                 default:
                     InvalidInput();
@@ -43,40 +54,41 @@ namespace LagerTools
         }
         static void SearchDbAll(string term)
         {
-            SearchBy("name", term, true);
+            SearchDb(SearchBy.Name, term, true);
             Console.WriteLine("-------------------------------------------------------------------------------");
-            SearchBy("number", term, true);
+            SearchDb(SearchBy.Number, term, true);
             Console.WriteLine("-------------------------------------------------------------------------------");
-            SearchBy("category", term, true);
+            SearchDb(SearchBy.Category, term, true);
             Console.WriteLine("-------------------------------------------------------------------------------");
-            SearchBy("storage", term, true);
+            SearchDb(SearchBy.Storage, term, true);
 
             Program.WriteColor("Press RETUR to go back: ", ConsoleColor.White);
             Console.ReadLine();
             SearchDb();
         }
-        static void SearchBy(string searchBy, string term, bool keepGoing)
+        static void SearchDb(SearchBy searchBy, string term, bool keepGoing)
         {
             List<Product> hits = new List<Product>();
             term = term.ToUpper();
 
-            switch(searchBy)
+            //Do a linq query depending on 'searchBy' parameter
+            //list items in query
+            switch (searchBy)
             {
-                case "name":
+                case SearchBy.Name:
                     hits = Program.productList.Where(x => x.ProductName.ToUpper().Contains(term)).ToList();
                     break;
-                case "number":
+                case SearchBy.Number:
                     hits = Program.productList.Where(x => x.ProductNumber.ToUpper().Contains(term)).ToList();
                     break;
-                case "category":
+                case SearchBy.Category:
                     hits = Program.productList.Where(x => x.ProductCategory.ToString().ToUpper().Contains(term)).ToList();
                     break;
-                case "storage":
+                case SearchBy.Storage:
                     hits = Program.productList.Where(x => x.ProductStorage.ToString().ToUpper().Contains(term)).ToList();
                     break;
             }
 
-            //var hits = Program.productList.Where(x => x.ProductName.Contains(term));
             Program.WriteLineColor($"Hits by {searchBy}: {hits.Count()}", ConsoleColor.White);
             Program.ListProducts(hits.ToList());
             if(keepGoing == false)
@@ -89,16 +101,22 @@ namespace LagerTools
         internal static void ShowEmptyShelves()
         {
             //(9 * 26) + 2 = 236 total enum values
+            //TODO: Refract 3 to 1 query (?!)
             var allEnums = Enum.GetValues(typeof(Storage)).Cast<Storage>().ToList();
             var usedEnums = Program.productList.Select(p => p.ProductStorage).Distinct().ToList();
             var unUsedEnums = allEnums.Where(x => usedEnums.Contains(x) == false).ToList();
 
             Program.WriteLineColor("Empty Shelves: " + unUsedEnums.Count(), ConsoleColor.White);
             Console.WriteLine();
-            //Console.WriteLine(unUsedEnums[0] + " " + unUsedEnums[unUsedEnums.Count() - 1]);
+
+            //Output empty files 12 per row and max 999 columns
+            //break if there are no more values to print
             int index = 0;
-            for (int a = 0; a < 22; a++)
+            for (int a = 0; a < 999; a++)
             {
+                if (index >= unUsedEnums.Count())
+                    break;
+
                 for (int b = 0; b < 12; b++)
                 {
                     if (index >= unUsedEnums.Count())
@@ -109,11 +127,11 @@ namespace LagerTools
                 }
                 Console.WriteLine();
             }
-            Program.WriteColor("Press RETUR to go back: ", ConsoleColor.White);
+            Program.WriteColor("\nPress RETUR to go back: ", ConsoleColor.White);
             Console.ReadLine();
             Program.Main();
         }
-        static void InvalidInput()
+        public static void InvalidInput()
         {
             Console.Clear();
             Program.WriteLineColor("Invalid input ", ConsoleColor.Red);

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 public enum Category
 {
@@ -14,6 +12,7 @@ public enum Category
     Bread,
     //TODO ADD MORE
 }
+//Shelf number
 public enum Storage
 {
     NULL,
@@ -90,6 +89,8 @@ namespace LagerTools
         public Category ProductCategory { get; private set; }
         public Storage ProductStorage { get; private set; }
 
+        //static values for color
+        //Print the same value in the same color every time
         public static ConsoleColor NameColor { get; private set; } = ConsoleColor.Green;
         public static ConsoleColor NumberColor { get; private set; } = ConsoleColor.Blue;
         public static ConsoleColor CategoryColor { get; private set; } = ConsoleColor.Yellow;

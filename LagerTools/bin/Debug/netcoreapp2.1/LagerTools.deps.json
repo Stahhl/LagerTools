@@ -8,7 +8,8 @@
     ".NETCoreApp,Version=v2.1": {
       "LagerTools/1.0.0": {
         "dependencies": {
-          "CsvHelper": "12.1.2"
+          "CsvHelper": "12.1.2",
+          "Tester": "1.0.0"
         },
         "runtime": {
           "LagerTools.dll": {}
@@ -27,7 +28,23 @@
         }
       },
       "Microsoft.CSharp/4.4.0": {},
-      "System.Reflection.TypeExtensions/4.4.0": {}
+      "System.Reflection.TypeExtensions/4.4.0": {},
+      "Tester/1.0.0": {
+        "dependencies": {
+          "Microsoft.VisualStudio.TestPlatform.TestFramework": "14.0.0.0"
+        },
+        "runtime": {
+          "Tester.dll": {}
+        }
+      },
+      "Microsoft.VisualStudio.TestPlatform.TestFramework.Reference/14.0.0.0": {
+        "runtime": {
+          "Microsoft.VisualStudio.TestPlatform.TestFramework.dll": {
+            "assemblyVersion": "14.0.0.0",
+            "fileVersion": "14.0.2505.1"
+          }
+        }
+      }
     }
   },
   "libraries": {
@@ -56,6 +73,16 @@
       "sha512": "sha512-dkmh/ySlwnXJp/1qYP9uyKkCK1CXR/REFzl7abHcArxBcV91mY2CgrrzSRA5Z/X4MevJWwXsklGRdR3A7K9zbg==",
       "path": "system.reflection.typeextensions/4.4.0",
       "hashPath": "system.reflection.typeextensions.4.4.0.nupkg.sha512"
+    },
+    "Tester/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Microsoft.VisualStudio.TestPlatform.TestFramework.Reference/14.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }
